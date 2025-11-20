@@ -11,29 +11,25 @@ public class BallMachine : MonoBehaviour
     public GameObject startButtonModel;
     public GameObject rotateButtonModel;
     public GameObject stopButtonModel;
-
     public GameObject ballPrefab;
     public Transform container;
     public Transform drawPosition;
-
     private List<GameObject> balls = new List<GameObject>();
     private List<Color> selectedColors = new List<Color>();
-    private List<Color> drawnColors = new List<Color>();
+    public List<Color> drawnColors = new List<Color>();
     private Rigidbody containerRigidbody;
-
     private Color[] availableColors = new Color[]
     {
         Color.red, Color.blue, Color.green, Color.yellow, Color.magenta,
         Color.cyan, Color.white, Color.black, new Color(1f, 0.5f, 0f), Color.gray
     };
-
     private int[] colorIndices = new int[3];
-
     private bool canStart = true;
     private bool canRotate = false;
     private bool canStop = false;
-
     private RotatingObjectController rotatingObjectController;
+    public bool autoFindNPCs = true;
+    public NPC[] npcs;
 
     void Start()
     {
@@ -44,15 +40,13 @@ public class BallMachine : MonoBehaviour
             containerRigidbody.useGravity = false;
             containerRigidbody.isKinematic = true;
         }
-
         rotatingObjectController = GetComponent<RotatingObjectController>();
-
         for (int i = 0; i < colorSelectModels.Length; i++)
         {
             colorIndices[i] = i % availableColors.Length;
             UpdateColorDisplay(i);
         }
-
+        if (autoFindNPCs) npcs = FindObjectsOfType<NPC>();
         resultText.text = "0";
     }
 
@@ -72,7 +66,6 @@ public class BallMachine : MonoBehaviour
                         return;
                     }
                 }
-
                 if (hit.collider.gameObject == startButtonModel && canStart)
                 {
                     StartMachine();
@@ -109,7 +102,6 @@ public class BallMachine : MonoBehaviour
         balls.Clear();
         drawnColors.Clear();
         resultText.text = "0";
-
         for (int i = 0; i < 10; i++)
         {
             GameObject ball = Instantiate(ballPrefab, container);
@@ -123,7 +115,6 @@ public class BallMachine : MonoBehaviour
             balls.Add(ball);
             ball.transform.localPosition = Vector3.zero;
         }
-
         canStart = false;
         canRotate = true;
         canStop = false;
@@ -131,18 +122,19 @@ public class BallMachine : MonoBehaviour
 
     void RotateContainer()
     {
+        if (!canRotate) return;
         selectedColors.Clear();
         for (int i = 0; i < colorIndices.Length; i++)
         {
             selectedColors.Add(availableColors[colorIndices[i]]);
         }
-
         containerRigidbody.angularVelocity = new Vector3(0, 5f, 0);
         if (rotatingObjectController != null)
         {
             rotatingObjectController.StartRotating();
         }
-
+        canRotate = false;
+        canStop = false;
         StartCoroutine(DrawBalls());
     }
 
@@ -150,34 +142,26 @@ public class BallMachine : MonoBehaviour
     {
         drawnColors.Clear();
         List<GameObject> remainingBalls = new List<GameObject>(balls);
-
         yield return new WaitForSeconds(2f);
-
         for (int i = 0; i < 3; i++)
         {
             if (remainingBalls.Count == 0) break;
-
+            if (i == 0) canStop = true;
             int randomIndex = Random.Range(0, remainingBalls.Count);
             GameObject drawnBall = remainingBalls[randomIndex];
-
             drawnBall.transform.SetParent(null);
             drawnBall.transform.position = drawPosition.position;
-
             Rigidbody rb = drawnBall.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.linearVelocity = Vector3.zero;
+                rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
-
             Color col = drawnBall.GetComponent<Renderer>().material.color;
             drawnColors.Add(col);
-
             remainingBalls.RemoveAt(randomIndex);
-
             yield return new WaitForSeconds(2f);
         }
-
         int matchCount = 0;
         foreach (var drawnColor in drawnColors)
         {
@@ -186,12 +170,19 @@ public class BallMachine : MonoBehaviour
                 matchCount++;
             }
         }
-
         resultText.text = matchCount.ToString();
-
-      //  canRotate = false;
+        TriggerNPCReactions();
         canStop = true;
+    }
 
+    void TriggerNPCReactions()
+    {
+        if ((npcs == null || npcs.Length == 0) && autoFindNPCs) npcs = FindObjectsOfType<NPC>();
+        if (npcs == null || npcs.Length == 0) return;
+        foreach (var npc in npcs)
+        {
+            if (npc != null) npc.PlayRandomReaction();
+        }
     }
 
     void StopMachine()
@@ -201,17 +192,15 @@ public class BallMachine : MonoBehaviour
         {
             rotatingObjectController.StopRotating();
         }
-
         foreach (var ball in balls)
         {
             Rigidbody rb = ball.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.linearVelocity = Vector3.zero;
+                rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
         }
-
         canStart = true;
         canRotate = false;
         canStop = false;
