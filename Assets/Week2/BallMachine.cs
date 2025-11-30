@@ -154,7 +154,7 @@ public class BallMachine : MonoBehaviour
             Rigidbody rb = drawnBall.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.velocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
             Color col = drawnBall.GetComponent<Renderer>().material.color;
@@ -197,7 +197,7 @@ public class BallMachine : MonoBehaviour
             Rigidbody rb = ball.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.velocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
         }

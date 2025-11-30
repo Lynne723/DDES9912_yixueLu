@@ -200,6 +200,12 @@ MonoBehaviour:
   onSecondaryInteract:
     m_PersistentCalls:
       m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
   customTouchDistance: -1
   customHoldDistance: -1
   restrictSecondaryToHeldOnly: 0
@@ -298,6 +304,12 @@ MonoBehaviour:
   onSecondaryInteract:
     m_PersistentCalls:
       m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
   customTouchDistance: -1
   customHoldDistance: -1
   restrictSecondaryToHeldOnly: 0
@@ -391,6 +403,12 @@ MonoBehaviour:
   onSecondaryInteract:
     m_PersistentCalls:
       m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
   customTouchDistance: -1
   customHoldDistance: -1
   restrictSecondaryToHeldOnly: 0
@@ -482,6 +500,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   onSecondaryInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
     m_PersistentCalls:
       m_Calls: []
   customTouchDistance: -1
@@ -1337,6 +1361,12 @@ MonoBehaviour:
   onSecondaryInteract:
     m_PersistentCalls:
       m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
   customTouchDistance: -1
   customHoldDistance: -1
   restrictSecondaryToHeldOnly: 0
@@ -1442,6 +1472,12 @@ MonoBehaviour:
   onSecondaryInteract:
     m_PersistentCalls:
       m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
   customTouchDistance: -1
   customHoldDistance: -1
   restrictSecondaryToHeldOnly: 0
@@ -1533,6 +1569,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   onSecondaryInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
     m_PersistentCalls:
       m_Calls: []
   customTouchDistance: -1
@@ -1638,6 +1680,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   onSecondaryInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrimaryInteractLift:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondaryInteractLift:
     m_PersistentCalls:
       m_Calls: []
   customTouchDistance: -1
